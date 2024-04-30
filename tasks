@@ -1,0 +1,56 @@
+
+1. Create a PHP script which automatically inserts (or seeds) 5 student records into the database.
+Higher marks will be awarded for the use of a database migrations library and/or a data generation
+library like Faker.
+5%
+
+2. Create a new script called students.php that will display all the student records within the student
+table. The data within each field should be displayed inside the cells of an HTML table and the
+HTML must be well formed.
+10%
+
+
+3. Add a new column to the student table (from task 2) which should contain checkboxes that allow
+selecting each of the table rows for performing certain operations. Add a Delete Button in the
+bottom of the list that allows deleting the selected student records from the database. Higher marks
+will be awarded for more robust implementations that may include validation or confirmation from
+the user that they are sure about proceeding with the deletion.
+20%
+
+
+4. As the application stands there is no facility to add new students to the student table. Create a
+new script called addstudent.php that contains a form for entering student details. The details
+should be submitted to a php script that builds a SQL statement and, when executed, inserts the
+student details into the student table. Higher marks will be awarded for implementations that
+include validation and the ability for passwords to be set from this form (and stored securely in the
+database).
+15%
+
+
+5. Add a file upload field to the addstudent.php script and implement the PHP code to allow for an
+image to be uploaded with each new student. If you decide to add a new database column as part
+of this functionality, ensure you document this in your report. The uploaded image should be
+displayed on the students.php page against the relevant student record. Higher marks will be
+awarded for robust implementations will some level of file type validation.
+15%
+
+
+6. Use emerging HTML and CSS standards and/or framework wrappers (e.g. Bootstrap or
+Tailwind) to improve the UI/UX. Ensure that any presentation elements are consistently applied
+across all pages.
+15%
+7. Protect all your SQL queries against SQL injection either by using mysqli_real_escape_string()
+or “MySQLi prepared statements” and demonstrate the BEFORE and AFTER behaviour of the
+code.
+10%
+
+
+8. With reference to authoritative resources:
+a) critically evaluate at least 2 different server-side approaches to development e.g. PHP,
+ASP.NET Core, Node.js. (200 words)
+b) give an account of at least 2 important security concerns that should be considered by
+developers of systems for managing personal data and how they can be mitigated against.
+(200 words)
+
+
+
