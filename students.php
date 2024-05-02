@@ -13,7 +13,7 @@ if (isset($_SESSION['id'])) {
 
    // prepare table
    $data['content'] .= "<table border='2'>";
-   $data['content'] .= "<tr><th>StudentID</th> <th>Firstname</th</tr>";
+   $data['content'] .= "<tr><th>StudentID</th><th>Firstname</th</tr>";
    $data['content'] .= "<th>Lastname</th>";
    $data['content'] .= "<th>dob</th>";
    $data['content'] .= "<th>Password</th>";
