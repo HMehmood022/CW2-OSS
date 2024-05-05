@@ -11,10 +11,10 @@ if (isset($_POST['delbttn']) && isset($_POST['students'])) {
     // Loop through selected studentID
     foreach ($delStudents as $studentId) {
         $sql_delete = "DELETE FROM student WHERE studentid = ?";
-        $stmt = $conn->prepare($sql_delete);
-        $stmt->bind_param("i", $studentId); 
-        $stmt->execute(); 
-        $stmt->close(); 
+        $stmt_delete = $conn->prepare($sql_delete);
+        $stmt_delete->bind_param("i", $studentId); 
+        $stmt_delete->execute(); 
+        $stmt_delete->close(); 
     }
 
     // Redirect back to students.php after deleting is complete
