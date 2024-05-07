@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<p>Missing fields, please fill in all required fields.</p>";
     } else {
         // file upload 
-        $file_dir = "C:/xampp/htdocs/cw2_oss/uploads/imgs";// this is where the student pics will be uploaded.
+        $file_dir = "img";// this is where the student pics will be uploaded.
         $file_target = $file_dir . basename($_FILES["student_pic"]["name"]);
         // Move the uploaded file to the directory we set above
         if (move_uploaded_file($_FILES["student_pic"]["tmp_name"], $file_target)) {
