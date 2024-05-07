@@ -10,7 +10,7 @@ if (isset($_SESSION['id'])) {
         // Retrieve  studentIDs to delete
         $delStudents = $_POST['students'];
 
-        // Loop through selected studentID
+        // Loop through selected the studentID
         foreach ($delStudents as $studentId) {
             $sql_delete = "DELETE FROM student WHERE studentid = ?";
             $stmt_delete = $conn->prepare($sql_delete);
@@ -19,7 +19,7 @@ if (isset($_SESSION['id'])) {
             $stmt_delete->close();
         }
 
-        // Redirect back to students.php after deleting is complete
+        // Redirects back to students.php after deleting is complete
         header("Location: students.php");
         exit(); // Kill the script after redicrect
     } else {

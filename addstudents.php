@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="col-md-12">
                 <label for="student_pic" class="form-label">Upload Student Photo</label>
-                <input type="file" class="form-control" id="student_pic" name="student_pic" accept="image/*">
+                <input type="file" class="form-control" id="student_pic" name="student_pic" accept="image/*"> 
             </div>
             <div class="col-md-12 mt-3">
                 <button type="submit" name="submit" class="btn btn-primary">Save</button>

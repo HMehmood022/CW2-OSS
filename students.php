@@ -8,7 +8,7 @@ if (isset($_SESSION['id'])) {
    echo template("templates/partials/header.php");
    echo template("templates/partials/nav.php");
 
-   // Display student information in a responsive grid
+   // Posts to deletestudents.php once the button and checkboxes are selected 
    $data['content'] .= "<form class='row g-3' action='deletestudents.php' method='POST'>";
 
    // Fetch student data from the database
@@ -36,7 +36,7 @@ if (isset($_SESSION['id'])) {
             </div>";
    }
 
-   // Add submit button within the form
+   // Adds submit button within the form
    $data['content'] .= "
         <div class='col-12'>
             <button type='submit' name='delbttn' class='btn btn-danger'>Delete Selected</button>
@@ -44,9 +44,9 @@ if (isset($_SESSION['id'])) {
 
    $data['content'] .= "</form>";
 
-   // Render the page using the default template
+   // Renders the page using the default template
    echo template("templates/default.php", $data);
 } else {
-   header("Location: index.php"); // Redirect to index.php if not logged in
+   header("Location: index.php"); // Redirects to index.php if not logged in
 }
 ?>
