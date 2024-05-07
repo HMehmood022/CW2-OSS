@@ -1,72 +1,52 @@
 <?php
-
 include ("_includes/config.inc");
 include ("_includes/dbconnect.inc");
 include ("_includes/functions.inc");
 
-
-// check logged in
+// Check if user is logged in
 if (isset($_SESSION['id'])) {
-
    echo template("templates/partials/header.php");
    echo template("templates/partials/nav.php");
 
-   // posts to deletestudents.php once button is pressed and records are selected
-   $data['content'] .="<form action='deletestudents.php' method='POST'>"; 
-   
-   // prepare table
-   $data['content'] .= "<table border='2'>";
-   $data['content'] .= "<tr><th>StudentID</th><th>Firstname</th</tr>";
-   $data['content'] .= "<th>Lastname</th>";
-   $data['content'] .= "<th>dob</th>";
-   $data['content'] .= "<th>Password</th>";
-   $data['content'] .= "<th>House</th>"; 
-   $data['content'] .= "<th>Town</th>";
-   $data['content'] .= "<th>County</th>";
-   $data['content'] .= "<th>Country</th>";
-   $data['content'] .= "<th>Postcode</th>";
+   // Display student information in a responsive grid
+   $data['content'] .= "<form class='row g-3' action='deletestudents.php' method='POST'>";
 
-
-   // SQL statement that selects from the student table
+   // Fetch student data from the database
    $sql_select = "SELECT * FROM student";
    $result = mysqli_query($conn, $sql_select);
-   // displays the rows in the student table.
+
    while ($row = mysqli_fetch_assoc($result)) {
 
-      $data['content'] .= "<tr><td> $row[studentid] </td>";
-      $data['content'] .= "<td> $row[firstname] </td>";
-      $data['content'] .= "<td> $row[lastname] </td>";
-      $data['content'] .= "<td> $row[dob] </td>";
-      $data['content'] .= "<td align='center'> $row[password] </td>";
-      $data['content'] .= "<td> $row[house] </td>";
-      $data['content'] .= "<td> $row[town] </td>";
-      $data['content'] .= "<td> $row[county] </td>";
-      $data['content'] .= "<td> $row[country] </td>";
-      $data['content'] .= "<td> $row[postcode] </td>";
-      $data['content'] .= "<td><img src='{$row['photo_path']}' width='100' height='100' alt='Student Photo'></td>"; // Display student photo
-      // checkbox to select records to delete.
-      $data['content'] .= "<td> Select <input type='checkbox' name='students[]'
-      value='$row[studentid]'/> </td>";
-      $data['content'].= "</tr>";
-      
+      $data['content'] .= "
+            <div class='col-md-4'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <h5 class='card-title'>Student ID: {$row['studentid']}</h5>
+                        <p class='card-text'>Name: {$row['firstname']} {$row['lastname']}</p>
+                        <p class='card-text'>DOB: {$row['dob']}</p>
+                        <p class='card-text'>Address: {$row['house']}, {$row['town']}, {$row['county']}</p>
+                        <p class='card-text'>Country: {$row['country']}, {$row['postcode']}</p>
+                        <img src='{$row['photo_path']}' class='img-thumbnail' width='100' height='100' alt='Student Photo'>
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' name='students[]' value='{$row['studentid']}' id='student{$row['studentid']}'>
+                            <label class='form-check-label' for='student{$row['studentid']}'>Select to delete</label>
+                        </div>
+                    </div>
+                </div>
+            </div>";
    }
-   $data['content'] .= "</table>"; 
 
-   //delete button
-   $data['content'] .= "<input type='submit' name='delbttn'
-   value ='Delete' />";
+   // Add submit button within the form
+   $data['content'] .= "
+        <div class='col-12'>
+            <button type='submit' name='delbttn' class='btn btn-danger'>Delete Selected</button>
+        </div>";
+
    $data['content'] .= "</form>";
 
-   //render table
+   // Render the page using the default template
    echo template("templates/default.php", $data);
 } else {
-   header("Location: index.php"); // if not logged in, redicrect to index.php
+   header("Location: index.php"); // Redirect to index.php if not logged in
 }
-
 ?>
-
-
-
-
-
-

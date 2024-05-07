@@ -1,7 +1,7 @@
 <?php
-include ("_includes/config.inc");
-include ("_includes/dbconnect.inc");
-include ("_includes/functions.inc");
+include("_includes/config.inc");
+include("_includes/dbconnect.inc");
+include("_includes/functions.inc");
 
 // Check if the user is logged in
 if (!isset($_SESSION['id'])) {
@@ -11,68 +11,104 @@ if (!isset($_SESSION['id'])) {
 echo template("templates/partials/header.php");
 echo template("templates/partials/nav.php");
 
-// this handles the form submission
+// Handles the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $studentid = mysqli_real_escape_string($conn, $_POST['studentid']); // mysqli_escape_string is used to protect agaaints SQL injection attacks
+    // MYSQLI real escape string defends againts sql injection attacks
+    $studentid = mysqli_real_escape_string($conn, $_POST['studentid']);
     $firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
     $lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
     $dob = $_POST['dob'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // hashes/encrypts the passowrd so that it isn't stored in plaintext
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $house = mysqli_real_escape_string($conn, $_POST['house']);
     $town = mysqli_real_escape_string($conn, $_POST['town']);
     $county = mysqli_real_escape_string($conn, $_POST['county']);
     $country = mysqli_real_escape_string($conn, $_POST['country']);
     $postcode = mysqli_real_escape_string($conn, $_POST['postcode']);
 
-    // validation, the user is asked to fill in all fields.
-    if (empty($studentid) . empty($firstname) . empty($lastname) . empty($dob) . empty($_POST['password'])) {
-        echo "<p>Missing fields, please fill in all required fields.</p>";
+    // validation, user is asked to input data
+    if (empty($studentid) || empty($firstname) || empty($lastname) || empty($dob) || empty($_POST['password'])) {
+        echo "<div class='alert alert-danger'>Missing fields, please fill in all required fields.</div>";
     } else {
-        // file upload 
-        $file_dir = "img";// this is where the student pics will be uploaded.
+        // File upload configuration
+        $file_dir = "img/";
         $file_target = $file_dir . basename($_FILES["student_pic"]["name"]);
-        // Move the uploaded file to the directory we set above
-        if (move_uploaded_file($_FILES["student_pic"]["tmp_name"], $file_target)) {
 
-            // if all fields are successfully validated, the data inserted into the db
+        if (move_uploaded_file($_FILES["student_pic"]["tmp_name"], $file_target)) {
+            // Insert student record into database
             $sql_insert = "INSERT INTO student (studentid, firstname, lastname, dob, password, house, town, county, country, postcode, photo_path) 
                 VALUES ('$studentid', '$firstname', '$lastname', '$dob', '$password', '$house', '$town', '$county', '$country', '$postcode', '$file_target')";
 
-            if (mysqli_query($conn, $sql_insert)) { // if the query is run successfully, the following message is output.
-                echo "<p>The student record was inserted successfully.</p>";
-                header("Location: students.php"); // redirects back to students.php if successful
-                exit(); // exit after redirect
+            if (mysqli_query($conn, $sql_insert)) {
+                echo "<div class='alert alert-success'>The student record was inserted successfully.</div>";
+                header("Location: students.php");
+                exit();
             } else {
-                echo "Error inserting the student record: " . mysqli_error($conn); // error message
+                echo "<div class='alert alert-danger'>Error inserting the student record: " . mysqli_error($conn) . "</div>";
             }
-
         } else {
-            echo "the file upload failed"; // error message 
+            echo "<div class='alert alert-danger'>File upload failed.</div>";
         }
     }
 }
 
+?>
+
+<!-- HTML form with Bootstrap styling -->
+<div class="container mt-5">
+    <h2>Add New Student</h2>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="studentid" class="form-label">Student ID</label>
+                <input type="text" class="form-control" id="studentid" name="studentid">
+            </div>
+            <div class="col-md-6">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstname" name="firstname">
+            </div>
+            <div class="col-md-6">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastname" name="lastname">
+            </div>
+            <div class="col-md-6">
+                <label for="dob" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" name="dob">
+            </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="col-md-6">
+                <label for="house" class="form-label">House</label>
+                <input type="text" class="form-control" id="house" name="house">
+            </div>
+            <div class="col-md-6">
+                <label for="town" class="form-label">Town</label>
+                <input type="text" class="form-control" id="town" name="town">
+            </div>
+            <div class="col-md-4">
+                <label for="county" class="form-label">County</label>
+                <input type="text" class="form-control" id="county" name="county">
+            </div>
+            <div class="col-md-4">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" name="country">
+            </div>
+            <div class="col-md-4">
+                <label for="postcode" class="form-label">Postcode</label>
+                <input type="text" class="form-control" id="postcode" name="postcode">
+            </div>
+            <div class="col-md-12">
+                <label for="student_pic" class="form-label">Upload Student Photo</label>
+                <input type="file" class="form-control" id="student_pic" name="student_pic" accept="image/*">
+            </div>
+            <div class="col-md-12 mt-3">
+                <button type="submit" name="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<?php
 echo template("templates/partials/footer.php");
 ?>
-<!-- html form for the table-->
-<h2>Add New Student</h2>
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
-    <!---protects againts cross site script attacks by preventing special characters -->
-    Student ID: <input type="text" name="studentid"><br>
-    First Name: <input type="text" name="firstname"><br>
-    Last Name: <input type="text" name="lastname"><br>
-    Date of Birth: <input type="date" name="dob"><br>
-    <!--The input type "date" allows the user to select their date of birth using a calander-->
-    Password: <input type="password" name="password"><br>
-    House: <input type="text" name="house"><br>
-    Town: <input type="text" name="town"><br>
-    County: <input type="text" name="county"><br>
-    Country: <input type="text" name="country"><br>
-    Postcode: <input type="text" name="postcode"><br>
-    <!-- This is the field for file uploading -->
-    Upload student photo: <input type="file" name="student_pic" accept="image/*"><br />
-    <input type="submit" name="submit" value="Save">
-
-
-
-</form>
