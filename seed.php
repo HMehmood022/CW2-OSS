@@ -29,7 +29,7 @@ VALUES ('21235465', 'mypassword2',  '2005-05-05', 'Gareth', 'Keenan', '125 addre
 VALUES ('22566645', 'mypassword5',  '2006-06-06', 'Tim', 'Canterbury', '126 addresslane', 'Chesham', 'Bucks', 'GB', 'HP5 56E')";
    $result = mysqli_query($conn, $sql);
 
-   echo $sql;
+   echo $sql; // used to see if the query is running
 
 }
 

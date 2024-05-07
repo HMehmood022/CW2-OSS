@@ -1,8 +1,8 @@
 <?php
 // Include necessary files
-include("_includes/config.inc");
-include("_includes/dbconnect.inc");
-include("_includes/functions.inc");
+include ("_includes/config.inc");
+include ("_includes/dbconnect.inc");
+include ("_includes/functions.inc");
 
 if (isset($_POST['delbttn']) && isset($_POST['students'])) {
     // Retrieve  studentIDs to delete
@@ -12,9 +12,9 @@ if (isset($_POST['delbttn']) && isset($_POST['students'])) {
     foreach ($delStudents as $studentId) {
         $sql_delete = "DELETE FROM student WHERE studentid = ?";
         $stmt_delete = $conn->prepare($sql_delete);
-        $stmt_delete->bind_param("i", $studentId); 
-        $stmt_delete->execute(); 
-        $stmt_delete->close(); 
+        $stmt_delete->bind_param("i", $studentId);
+        $stmt_delete->execute();
+        $stmt_delete->close();
     }
 
     // Redirect back to students.php after deleting is complete
@@ -26,6 +26,3 @@ if (isset($_POST['delbttn']) && isset($_POST['students'])) {
     exit(); // kill script after redirect
 }
 ?>
-
-
-

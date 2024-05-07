@@ -13,7 +13,7 @@ if (isset($_SESSION['id'])) {
 
    // posts to deletestudents.php once button is pressed and records are selected
    $data['content'] .="<form action='deletestudents.php' method='POST'>"; 
-
+   
    // prepare table
    $data['content'] .= "<table border='2'>";
    $data['content'] .= "<tr><th>StudentID</th><th>Firstname</th</tr>";
@@ -43,6 +43,7 @@ if (isset($_SESSION['id'])) {
       $data['content'] .= "<td> $row[county] </td>";
       $data['content'] .= "<td> $row[country] </td>";
       $data['content'] .= "<td> $row[postcode] </td>";
+      $data['content'] .= "<td><img src='{$row['photo_path']}' width='100' height='100' alt='Student Photo'></td>"; // Display student photo
       // checkbox to select records to delete.
       $data['content'] .= "<td> Select <input type='checkbox' name='students[]'
       value='$row[studentid]'/> </td>";
