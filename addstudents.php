@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $postcode = mysqli_real_escape_string($conn, $_POST['postcode']);
 
     // validation, user is asked to input data
-    if (empty($studentid) || empty($firstname) || empty($lastname) || empty($dob) || empty($_POST['password'])) {
+    if (empty($studentid) . empty($firstname) . empty($lastname) .  empty($dob) . empty($_POST['password'])) {
         echo "<div class='alert alert-danger'>Missing fields, please fill in all required fields.</div>";
     } else {
         // File upload configuration
